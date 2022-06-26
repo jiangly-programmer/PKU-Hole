@@ -2009,8 +2009,3 @@ JSON_API std::ostream& operator<<(std::ostream&, const Value& root);
 
 
 #endif //ifndef JSON_AMALGATED_H_INCLUDED
-
-#ifndef INCLUDE_CPP
-#define INCLUDE_CPP
-#include "../jsoncpp.cpp"
-#endif

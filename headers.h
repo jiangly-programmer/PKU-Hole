@@ -1,21 +1,23 @@
 #ifndef TREEHOLE_HEADERS
 #define TREEHOLE_HEADERS
 
-#include<iostream>
-#include<algorithm>
-#include<string>
-#include<cassert>
-#include<fstream>
-#include<vector>
-#include<cstdio>
-#include<map>
-#include<unordered_set>
+#include <windows.h>
+#include <algorithm>
+#include <cassert>
+#include <cstdio>
+#include <fstream>
+#include <iostream>
+#include <map>
+#include <string>
+#include <unordered_set>
+#include <vector>
 
-using std::string;
-using std::vector;
 using std::map;
+using std::string;
 using std::unordered_set;
-template<class T>
+using std::vector;
+
+template <class T>
 using set = std::unordered_set<T>;
 
 #endif

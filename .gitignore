@@ -30,3 +30,12 @@
 *.exe
 *.out
 *.app
+
+.vs/
+x64/
+curl/
+HoleSearcherCache
+PKU-Hole.vcxproj
+PKU-Hole.vcxproj.user
+TagManagerCache
+PKU-Hole.sln
