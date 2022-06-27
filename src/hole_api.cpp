@@ -1,8 +1,7 @@
 #include "hole_api.h"
 #include <codecvt>
 #include <locale>
-#include "curl/include/curl/curl.h"
-
+#include "curl/curl.h"
 HoleAPI API;
 
 string geturl(string website,

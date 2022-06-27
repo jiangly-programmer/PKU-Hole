@@ -23,7 +23,7 @@ void TagManager::updateTag(const string& tag) {
 TagManager::TagManager() {
   FILE* F = fopen("TagManagerCache", "r");
   if (F != NULL) {
-    string tag;
+    std::string tag;
     while (233) {
       tag = "";
       char ch;
@@ -71,6 +71,8 @@ TagManager tagManager;
 void TerminalInterater::main() {
   std::cout << "TreeHoleHelper\n";
   std::cout << "version : " TREEHOLE_VERSION "\n" << std::flush;
+
+  return;
   enum class State { Browse, Search, Tag } state;
   int page;                            // Browse
   string tag;                          // Tag

@@ -2,7 +2,7 @@
 #define TREEHOLE_BASIC_CLASS
 
 #include "headers.h"
-#include "jsoncpp/json.h"
+#include "json/json.h"
 
 typedef Json::Value JSON;
 

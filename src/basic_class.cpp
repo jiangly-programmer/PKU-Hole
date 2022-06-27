@@ -1,6 +1,4 @@
 #include "basic_class.h"
-#include "headers.h"
-#include "jsoncpp/json.h"
 
 Image::Image(const Image& x) : url(x.url) {}
 Image::Image(const string& x) : url(x) {}
@@ -23,6 +21,7 @@ string JSON_to_string(const JSON& s) {
   return writer.write(s);
 }
 JSON readJSON(const string& s) {
+  std::cerr << "readJson\n";
   FILE* file = fopen(s.c_str(), "r");
   assert(file);
   static const int size = 1 << 20;

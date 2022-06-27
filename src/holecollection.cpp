@@ -1,7 +1,4 @@
 #include "holecollection.h"
-#include "filter.h"
-#include "hole.h"
-#include "hole_api.h"
 
 HoleCollection::HoleCollection() {}
 HoleCollection::HoleCollection(const std::vector<int>& hid) {
