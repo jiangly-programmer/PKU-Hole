@@ -21,7 +21,6 @@ string JSON_to_string(const JSON& s) {
   return writer.write(s);
 }
 JSON readJSON(const string& s) {
-  std::cerr << "readJson\n";
   FILE* file = fopen(s.c_str(), "r");
   assert(file);
   static const int size = 1 << 20;

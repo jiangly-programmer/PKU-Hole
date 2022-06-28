@@ -6,6 +6,7 @@ class CONFIG {
   static std::string url;
   static std::string token;
 };
-static JSON config = readJSON("config.json");
+//static JSON config = readJSON("config.json");
+static JSON config;
 
 #endif
