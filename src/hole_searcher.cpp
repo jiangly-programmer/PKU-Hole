@@ -19,14 +19,17 @@ struct HoleSearcherCache {
       return now_;
     }
     update_time = time(0);
-    int _pre = last / 20000;
-    int _pre1 = last / 200000;
+    int _pre = last / 20000, _pre1 = last / 200000, first_time = 1;
     while (last + 2015 <= now_.holes.front().pid) {
-      Sleep(100000);
-      if (last / 20000 != _pre)
-        Sleep(600000), _pre = last / 20000;
-      if (last / 200000 != _pre1)
-        Sleep(600000), _pre1 = last / 200000;
+      std::cerr << "updating cache, please wait...\n";
+      if (!first_time) {
+        Sleep(100000);
+        if (last / 20000 != _pre)
+          Sleep(600000), _pre = last / 20000;
+        if (last / 200000 != _pre1)
+          Sleep(600000), _pre1 = last / 200000;
+      }
+      first_time = 0;
       vector<int> V;
       for (int i = 1; i <= 15; i++) {
         last += 50 + rand() % 10;
