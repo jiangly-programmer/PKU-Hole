@@ -51,14 +51,16 @@ string HoleCollection::to_str() const {
 
 void HoleCollection::updateAll() {
   vector<int> pid;
-  for (const auto& w : holes) {
-    pid.push_back(w.pid);
-  }
-  auto res = API.multi_getcomment(pid);
-  for (int i = 0; i < (int)res.size(); i++) {
-    if (res[i]["code"].asInt() == 0) {
-      for (int j = 0; j < (int)res[i]["data"].size(); j++) {
-        holes[i].reply[j] = Text(res[i]["data"][j]["text"].asString());
+  for (int i = 0; i < (int)holes.size(); i++) {
+    pid.push_back(holes[i].pid);
+    if (i % 20 == 19 || i == (int)holes.size() - 1) {
+      auto res = API.multi_getcomment(pid);
+      for (int i = 0; i < (int)res.size(); i++) {
+        if (res[i]["code"].asInt() == 0) {
+          for (int j = 0; j < (int)res[i]["data"].size(); j++) {
+            holes[i].reply[j] = Text(res[i]["data"][j]["text"].asString());
+          }
+        }
       }
     }
   }
