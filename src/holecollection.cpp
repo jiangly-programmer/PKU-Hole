@@ -55,13 +55,16 @@ void HoleCollection::updateAll() {
     pid.push_back(holes[i].pid);
     if (i % 20 == 19 || i == (int)holes.size() - 1) {
       auto res = API.multi_getcomment(pid);
-      for (int i = 0; i < (int)res.size(); i++) {
-        if (res[i]["code"].asInt() == 0) {
-          for (int j = 0; j < (int)res[i]["data"].size(); j++) {
-            holes[i].reply[j] = Text(res[i]["data"][j]["text"].asString());
+      int st = i - (int)pid.size() + 1;
+      for (int k = 0; k < (int)res.size(); k++) {
+        if (res[k]["code"].asInt() == 0) {
+          holes[st+k].reply.resize(res[k]["data"].size());
+          for (int j = 0; j < (int)res[k]["data"].size(); j++) {
+            holes[st+k].reply[j] = Text(res[k]["data"][j]["text"].asString());
           }
         }
       }
+      pid.clear();
     }
   }
 }
