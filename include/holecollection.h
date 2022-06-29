@@ -1,9 +1,7 @@
-#ifndef TREEHOLE_HOLECOLLECTION
-#define TREEHOLE_HOLECOLLECTION
+#pragma once
 
-#include "filter.h"
-#include "hole.h"
-#include "hole_api.h"
+#include "Filter.h"
+#include "Hole.h"
 
 struct HoleCollection {
   vector<Hole> holes;
@@ -30,5 +28,3 @@ struct HoleCollection {
   const_iterator begin() const;
   const_iterator end() const;
 };
-
-#endif

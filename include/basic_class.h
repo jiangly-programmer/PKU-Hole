@@ -1,5 +1,4 @@
-#ifndef TREEHOLE_BASIC_CLASS
-#define TREEHOLE_BASIC_CLASS
+#pragma once
 
 #include "headers.h"
 #include "json/json.h"
@@ -34,4 +33,3 @@ extern Json::FastWriter writer;
 JSON string_to_JSON(const string&);
 string JSON_to_string(const JSON&);
 JSON readJSON(const string&);
-#endif

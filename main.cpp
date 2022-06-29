@@ -1,6 +1,6 @@
 #include "PKUHole.h"
 #include "head.h"
-#include "holecollection.h"
+#include "HoleCollection.h"
 
 using std::cin;
 using std::cout;
@@ -10,10 +10,10 @@ void test_holecollection() {
   std::cout << x.to_str() << '\n';
 }
 int main(int argc, char* argv[]) {
+  test_hole_searcher();
   QApplication app(argc, argv);
 
   PKUHole window;
-
   window.show();
 
   return app.exec();
@@ -34,5 +34,4 @@ int main(int argc, char* argv[]) {
   //  HoleSearcher HS(AFilter, T_ALLOK, 0);
   // HoleCollection x = HS.getNext();
   // std::ofstream("tmp.out") << x.to_str() << '\n';
-  return 0;
 }

@@ -1,8 +1,7 @@
-#ifndef TREEHOLE_hole
-#define TREEHOLE_hole
+#pragma once
 
+#include "HoleAPI.h"
 #include "basic_class.h"
-#include "hole_api.h"
 
 namespace HoleJSON {
 struct JSON_format {
@@ -186,5 +185,3 @@ struct Hole_level_2 : Hole {
 struct Hole_level_3 : Hole {
 };
 */
-
-#endif

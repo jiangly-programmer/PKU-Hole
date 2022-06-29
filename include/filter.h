@@ -1,5 +1,4 @@
-#ifndef TREEHOLE_FILTER
-#define TREEHOLE_FILTER
+#pragma once
 
 #include "hole.h"
 
@@ -33,4 +32,3 @@ Filter getFilter(const std::vector<std::pair<string, int>>&,
                  const std::vector<std::pair<string, int>>&);
 Filter getFilter(const std::vector<std::vector<std::pair<string, int>>>&,
                  const std::vector<std::pair<string, int>>&);
-#endif

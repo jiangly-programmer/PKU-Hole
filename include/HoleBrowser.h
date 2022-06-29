@@ -1,7 +1,7 @@
 #pragma once
 
 #include <QWidget>
-#include "hole.h"
+#include "Hole.h"
 #include "ui_HoleBrowser.h"
 
 class HoleBrowser : public QWidget {

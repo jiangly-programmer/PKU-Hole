@@ -1,84 +1,81 @@
-#include "head.h"
+#include "HoleSearcher.h"
 
 // TODO: 2000000?
 
-struct HoleSearcherCache {
-  vector<std::pair<int, time_t>> cache;  // 大约每一千条存几个位置
-  time_t update_time;
-  HoleCollection update() {
-    // std::cerr << "enter HoleSearcherCache::update()" << std::endl;
-    int last;
-    if (cache.size())
-      last = cache.back().first;
-    else
-      last = 2000000;
-    HoleCollection now_ = HoleCollection::from_getlist_result(API.getlist(1));
-    return now_;
-    // std::cerr<< now_.holes.back().pid << std::endl;
-    if (last + 2015 > now_.holes.front().pid || time(0) - update_time < 3600) {
-      return now_;
-    }
-    update_time = time(0);
-    int _pre = last / 20000, _pre1 = last / 200000, first_time = 1;
-    while (last + 2015 <= now_.holes.front().pid) {
-      std::cerr << "updating cache, please wait...\n";
-      if (!first_time) {
-        Sleep(100000);
-        if (last / 20000 != _pre)
-          Sleep(600000), _pre = last / 20000;
-        if (last / 200000 != _pre1)
-          Sleep(600000), _pre1 = last / 200000;
-      }
-      first_time = 0;
-      vector<int> V;
-      for (int i = 1; i <= 15; i++) {
-        last += 50 + rand() % 10;
-        if (last + 15 > now_.holes.front().pid)
-          break;
-        V.push_back(last);
-        // for (int j = 1; j <= 3; j ++) V.push_back(last + j*3);
-        // last += 15;
-      }
-      HoleCollection res(V);
-      for (auto h : res)
-        if (h.hole_time < cache.back().second) {
-          std::cerr << "ERROR" << std::endl;
-          std::cerr << "h.hole_time < cache.back().second" << std::endl;
-          std::cerr << "cache.back().second: " << cache.back().second
-                    << std::endl;
-          std::cerr << "h.hole_time: " << h.hole_time << std::endl;
-          std::cerr << h.to_str() << std::endl;
-          for (auto t : V)
-            std::cerr << t << ' ';
-          std::cerr << '\n';
-          std::cerr << h.pid;
-          exit(0);
-        }
-      std::cerr << last << "finished, " << res.holes.size() << " holes\n";
-      FILE* F = fopen("HoleSearcherCache", "a");
-      for (auto h : res)
-        cache.push_back({h.pid, h.hole_time}),
-            fprintf(F, "%d %llu\n", h.pid, h.hole_time);
-      fclose(F);
-      if (res.holes.size() < 10) {
-        std::cerr << "WARNING: res.holes.size() < 10\n";
-        assert(res.holes.size() >= 5);
-      }
-    }
+HoleCollection HoleSearcherCache::update() {
+  // std::cerr << "enter HoleSearcherCache::update()" << std::endl;
+  int last;
+  if (cache.size())
+    last = cache.back().first;
+  else
+    last = 2000000;
+  HoleCollection now_ = HoleCollection::from_getlist_result(API.getlist(1));
+  return now_;
+  // std::cerr<< now_.holes.back().pid << std::endl;
+  if (last + 2015 > now_.holes.front().pid || time(0) - update_time < 3600) {
     return now_;
   }
-  HoleSearcherCache() {
-    FILE* F = fopen("HoleSearcherCache", "r");
-    if (F != NULL) {
-      int x;
-      time_t y;
-      while (fscanf(F, "%d %llu", &x, &y) == 2)
-        cache.push_back({x, y});
-      fclose(F);
+  update_time = time(0);
+  int _pre = last / 20000, _pre1 = last / 200000, first_time = 1;
+  while (last + 2015 <= now_.holes.front().pid) {
+    std::cerr << "updating cache, please wait...\n";
+    if (!first_time) {
+      Sleep(100000);
+      if (last / 20000 != _pre)
+        Sleep(600000), _pre = last / 20000;
+      if (last / 200000 != _pre1)
+        Sleep(600000), _pre1 = last / 200000;
     }
-    update();
+    first_time = 0;
+    vector<int> V;
+    for (int i = 1; i <= 15; i++) {
+      last += 50 + rand() % 10;
+      if (last + 15 > now_.holes.front().pid)
+        break;
+      V.push_back(last);
+      // for (int j = 1; j <= 3; j ++) V.push_back(last + j*3);
+      // last += 15;
+    }
+    HoleCollection res(V);
+    for (auto h : res)
+      if (h.hole_time < cache.back().second) {
+        std::cerr << "ERROR" << std::endl;
+        std::cerr << "h.hole_time < cache.back().second" << std::endl;
+        std::cerr << "cache.back().second: " << cache.back().second
+                  << std::endl;
+        std::cerr << "h.hole_time: " << h.hole_time << std::endl;
+        std::cerr << h.to_str() << std::endl;
+        for (auto t : V)
+          std::cerr << t << ' ';
+        std::cerr << '\n';
+        std::cerr << h.pid;
+        exit(0);
+      }
+    std::cerr << last << "finished, " << res.holes.size() << " holes\n";
+    FILE* F = fopen("HoleSearcherCache", "a");
+    for (auto h : res)
+      cache.push_back({h.pid, h.hole_time}),
+          fprintf(F, "%d %llu\n", h.pid, h.hole_time);
+    fclose(F);
+    if (res.holes.size() < 10) {
+      std::cerr << "WARNING: res.holes.size() < 10\n";
+      assert(res.holes.size() >= 5);
+    }
   }
-} HSC;
+  return now_;
+}
+HoleSearcherCache::HoleSearcherCache() {
+  FILE* F = fopen("HoleSearcherCache", "r");
+  if (F != NULL) {
+    int x;
+    time_t y;
+    while (fscanf(F, "%d %llu", &x, &y) == 2)
+      cache.push_back({x, y});
+    fclose(F);
+  }
+  update();
+}
+HoleSearcherCache HSC;
 
 HoleSearcher::HoleSearcher(const Filter& _filter,
                            const TimeFilter& tfilter,

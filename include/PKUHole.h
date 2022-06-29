@@ -1,7 +1,7 @@
 #pragma once
 
 #include "HoleBrowser.h"
-#include "holecollection.h"
+#include "HoleCollection.h"
 #include "ui_PKUHole.h"
 
 class PKUHole : public QMainWindow {

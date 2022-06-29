@@ -1,7 +1,8 @@
-#include "hole_api.h"
+#include "HoleAPI.h"
 #include <codecvt>
 #include <locale>
 #include "curl/curl.h"
+
 HoleAPI API;
 
 string geturl(string website,
@@ -18,12 +19,14 @@ string geturl(string website,
   res += "&user_token=" + CONFIG::token;
   return res;
 }
+
 size_t easy_callback(void* data, size_t size, size_t nmemb, void* userp) {
   for (int i = 0; i < (int)nmemb; i++) {
     ((std::string*)userp)->push_back(((char*)data)[i]);
   }
   return nmemb;
 }
+
 CURL* my_easy_init(string url, string& dst) {
   dst.clear();
   CURL* curl = curl_easy_init();
@@ -34,13 +37,17 @@ CURL* my_easy_init(string url, string& dst) {
   curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void*)&dst);
   return curl;
 }
+
 const string error = "{\"code\":-1}";
+
 int hex_to_int(int c) {
   return (c >= 'a' ? c - 'a' + 10 : c - '0');
 }
+
 char int_to_hex(int w) {
   return w >= 10 ? 'a' + w - 10 : '0' + w;
 }
+
 string utf8_to_url(const string& s) {
   string res;
   for (int i = 0; i < (int)s.size(); i++) {
@@ -49,6 +56,7 @@ string utf8_to_url(const string& s) {
   }
   return res;
 }
+
 string unicode_to_utf8(const string& s) {
 #define hex4(i)                                                 \
   ((hex_to_int(s[i + 2]) << 12) | (hex_to_int(s[i + 3]) << 8) | \
@@ -108,6 +116,7 @@ string unicode_to_utf8(const string& s) {
   return res;
 #undef hex4
 }
+
 JSON HoleAPI::getjson(const std::string& url) const {
   std::cerr << "enter getjson\n";
   string tmp;
@@ -126,22 +135,28 @@ JSON HoleAPI::getjson(const std::string& url) const {
   return res2;
   // return string_to_JSON(unicode_to_utf8(tmp));
 }
+
 JSON HoleAPI::getone(int pid) const {
   return getjson(geturl(CONFIG::url, "getone", {{"pid", pid}}));
 }
+
 JSON HoleAPI::getcomment(int pid) const {
   return getjson(geturl(CONFIG::url, "getcomment", {{"pid", pid}}));
 }
+
 JSON HoleAPI::getlist(int p) const {
   return getjson(geturl(CONFIG::url, "getlist", {{"p", p}}));
 }
+
 JSON HoleAPI::getattention() const {
   return getjson(geturl(CONFIG::url, "getattention", {}));
 }
+
 JSON HoleAPI::search(string word, int page) const {
   return getjson(geturl(CONFIG::url, "search", {{"page", page}},
                         "&keywords=" + utf8_to_url(word) + "&pagesize=50"));
 }
+
 vector<JSON> HoleAPI::multi_getone(const vector<int>& pid) const {
   if (!pid.size())
     return vector<JSON>();
@@ -187,6 +202,7 @@ vector<JSON> HoleAPI::multi_getone(const vector<int>& pid) const {
     }
   return RES;
 }
+
 vector<JSON> HoleAPI::multi_getcomment(const vector<int>& pid) const {
   if (!pid.size())
     return vector<JSON>();

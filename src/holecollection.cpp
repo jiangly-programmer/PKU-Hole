@@ -1,4 +1,4 @@
-#include "holecollection.h"
+#include "HoleCollection.h"
 
 HoleCollection::HoleCollection() {}
 HoleCollection::HoleCollection(const std::vector<int>& hid) {

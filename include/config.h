@@ -1,5 +1,5 @@
-#ifndef TREEHOLE_CONFIG
-#define TREEHOLE_CONFIG
+#pragma once
+
 #include "basic_class.h"
 class CONFIG {
  public:
@@ -8,5 +8,3 @@ class CONFIG {
 };
 //static JSON config = readJSON("config.json");
 static JSON config;
-
-#endif

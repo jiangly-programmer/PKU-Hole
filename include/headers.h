@@ -1,5 +1,4 @@
-#ifndef TREEHOLE_HEADERS
-#define TREEHOLE_HEADERS
+#pragma once
 
 #include <windows.h>
 #include <algorithm>
@@ -19,5 +18,3 @@ using std::vector;
 
 template <class T>
 using set = std::unordered_set<T>;
-
-#endif
