@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QWidget>
+#include <QtNetwork>
 #include "Hole.h"
 #include "ui_HoleBrowser.h"
 
@@ -10,8 +11,12 @@ class HoleBrowser : public QWidget {
  public:
   HoleBrowser(QWidget* parent = nullptr);
   ~HoleBrowser();
-  void load(int holeID);
+  void setHole(Hole* hole);
 
  private:
+  QNetworkAccessManager networkManager;
   Ui::HoleBrowserClass ui;
+
+ public slots:
+  void loadPicture(QNetworkReply* reply);
 };

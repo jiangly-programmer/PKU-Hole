@@ -3,6 +3,8 @@
 #include "headers.h"
 #include "json/json.h"
 
+string trim(string s);
+
 typedef Json::Value JSON;
 
 struct Image {

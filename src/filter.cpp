@@ -1,4 +1,4 @@
-#include "filter.h"
+#include "Filter.h"
 
 TimeFilter::TimeFilter(size_t l, size_t r) : time_min(l), time_max(r) {}
 bool TimeFilter::operator()(const Hole& h) const {

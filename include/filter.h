@@ -1,6 +1,6 @@
 #pragma once
 
-#include "hole.h"
+#include "Hole.h"
 
 struct TimeFilter {
   size_t time_min, time_max;

@@ -1,7 +1,7 @@
 #ifndef TREEHOLE_HOLE_API
 #define TREEHOLE_HOLE_API
 
-#include "basic_class.h"
+#include "utility.h"
 #include "config.h"
 
 struct HoleAPI {

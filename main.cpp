@@ -9,11 +9,17 @@ void test_holecollection() {
   HoleCollection x({1, 3629474, 3377010});
   std::cout << x.to_str() << '\n';
 }
+
 int main(int argc, char* argv[]) {
+  config = readJSON("config.json");
+
+  CONFIG::url = config["url"].asString() + "api.php";
+  CONFIG::token = config["token"].asString();
   //test_hole_searcher();
   QApplication app(argc, argv);
 
   PKUHole window;
+  window.resize(1920, 1080);
   window.show();
 
   return app.exec();

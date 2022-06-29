@@ -1,7 +1,7 @@
 #pragma once
 
 #include "HoleAPI.h"
-#include "basic_class.h"
+#include "utility.h"
 
 namespace HoleJSON {
 struct JSON_format {

@@ -16,4 +16,5 @@ class PKUHole : public QMainWindow {
 
  public slots:
   void jump();
+  void refresh();
 };
