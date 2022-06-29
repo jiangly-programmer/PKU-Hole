@@ -137,6 +137,7 @@ const HoleCollection HoleSearcher::getNext() {
         V.push_back(i);
       R -= 20;
       HoleCollection tmp(V);
+      tmp.updateAll();
       for (auto h : tmp)
         if (filter(h) && TFilter(h))
           res.holes.push_back(h);
@@ -153,6 +154,7 @@ const HoleCollection HoleSearcher::getNext() {
   for (auto word : words) {
     std::cerr << "try word " << word << ", page " << R << '\n';
     HoleCollection hc = HoleCollection::from_search_result(API.search(word, R));
+    hc.updateAll();
     for (auto h : hc)
       fprintf(stderr, "%d ", h.pid);
     fprintf(stderr, "\n");
