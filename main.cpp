@@ -10,7 +10,7 @@ void test_holecollection() {
   std::cout << x.to_str() << '\n';
 }
 int main(int argc, char* argv[]) {
-  test_hole_searcher();
+  //test_hole_searcher();
   QApplication app(argc, argv);
 
   PKUHole window;
