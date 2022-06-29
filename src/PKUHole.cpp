@@ -7,10 +7,8 @@ PKUHole::PKUHole(QWidget* parent) : QMainWindow(parent) {
 void PKUHole::jump() {
   int holeID = this->ui.IDEdit->text().toInt();
 
-  auto hole = Hole(API.getone(holeID), HoleJSON::GETONE);
-
-  auto* holeBrowser = new HoleBrowser();
-  holeBrowser->load(hole);
+  auto holeBrowser = new HoleBrowser();
+  holeBrowser->load(holeID);
 
   holeBrowser->show();
 }
