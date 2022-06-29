@@ -12,6 +12,7 @@ string trim(string s) {
 }
 
 const HoleCollection TagManager::getTag(const string& tag) {
+  tags[tag].updateAll();
   return tags[tag];
 }
 void TagManager::addHole(const Hole& h, const string& tag) {
@@ -101,6 +102,7 @@ void TerminalInterater::main() {
       if (state == State::Browse) {
         page++;
         hc = HoleCollection::from_getlist_result(API.getlist(page));
+        hc.updateAll();
         output(hc.to_str());
       } else if (state == State::Search) {
         hc = hs.getNext();
@@ -113,6 +115,7 @@ void TerminalInterater::main() {
       state = State::Browse;
       page = 1;
       hc = HoleCollection::from_getlist_result(API.getlist(page));
+      hc.updateAll();
       output(hc.to_str());
     } else if (cmd == "search") {
       state = State::Search;
