@@ -244,7 +244,7 @@ vector<JSON> HoleAPI::multi_getcomment(const vector<int>& pid) const {
   vector<JSON> RES;
   for (auto s : res)
     if (s.size() &&
-        s.find("503 Service Temporarily Unavailable") != string::npos) {
+        s.find("503 Service Temporarily Unavailable") == string::npos) {
       RES.push_back(string_to_JSON(unicode_to_utf8(s)));
     } else {
       RES.push_back(string_to_JSON(error));
