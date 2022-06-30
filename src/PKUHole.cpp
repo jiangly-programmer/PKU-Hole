@@ -1,8 +1,8 @@
 #include "PKUHole.h"
 #include <QScrollBar>
+#include "AdvancedSearch.h"
 #include "HolePreviewer.h"
 #include "HoleSearcher.h"
-#include "AdvancedSearch.h"
 
 PKUHole::PKUHole(QWidget* parent)
     : QMainWindow(parent), pid(-1), searcher(nullptr), batchCount(0) {
@@ -52,6 +52,7 @@ void PKUHole::loadMore() {
   ui.holeList->verticalScrollBar()->setValue(0);
 
   HoleCollection holeCollection;
+
   if (searcher == nullptr) {
     holeCollection =
         HoleCollection::from_getlist_result(API.getlist(++batchCount));
@@ -87,10 +88,11 @@ void PKUHole::startAdvancedSearchWindow() {
 
   advancedSearch->show();
 
-  connect(advancedSearch, &AdvancedSearch::advancedSearchConfirmed, this, &PKUHole::applyAdvancedSearch);
+  connect(advancedSearch, &AdvancedSearch::advancedSearchConfirmed, this,
+          &PKUHole::applyAdvancedSearch);
 }
 
-void PKUHole::applyAdvancedSearch(Filter *filter) {
+void PKUHole::applyAdvancedSearch(Filter* filter) {
   if (searcher != nullptr) {
     delete searcher;
   }
