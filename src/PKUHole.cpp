@@ -43,13 +43,13 @@ void PKUHole::onSearchButtonClicked() {
     hole->deleteLater();
   }
 
+  ui.holeList->verticalScrollBar()->setValue(0);
   loadMore();
 }
 
 void PKUHole::loadMore() {
   ui.loadMoreButton->setText("加载更多");
   ui.loadMoreButton->setEnabled(true);
-  ui.holeList->verticalScrollBar()->setValue(0);
 
   HoleCollection holeCollection;
 

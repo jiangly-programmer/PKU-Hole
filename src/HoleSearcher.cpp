@@ -139,15 +139,25 @@ const HoleCollection HoleSearcher::getNext(unsigned cnt) {
     }
     return res;
   }
-  if ([&](){int c=0;for (auto h:buffer) if (h.pid>=L) ++c;return c<cnt;}() && R <= 3) {
+  int first_time = 1;
+  while (R <= 3) {
+    int c = 0;
+    for (auto h : buffer)
+      if (h.pid >= L)
+        ++c;
+    if (c >= cnt / 2 && (!first_time || c >= cnt))
+      break;
+    first_time = 0;
     // buffer 不够用，并且还有东西没搜
     L = 0;
     set<int> s;
-    for (auto h : buffer) s.insert(h.pid);
+    for (auto h : buffer)
+      s.insert(h.pid);
     for (auto word : words) {
       std::cerr << "try word " << word << ", page " << R << '\n';
-      HoleCollection hc = HoleCollection::from_search_result(API.search(word, R));
-      int last = 1e9;
+      HoleCollection hc =
+          HoleCollection::from_search_result(API.search(word, R));
+      int last = 0;
       // hc.updateAll();
       for (auto h : hc)
         if (!s.count(h.pid)) {
@@ -161,7 +171,11 @@ const HoleCollection HoleSearcher::getNext(unsigned cnt) {
     R++;
   }
   HoleCollection res;
-  while (buffer.size() && buffer.begin() -> pid >= L && res.holes.size() < cnt) res.holes.push_back(*(buffer.begin())),buffer.erase(buffer.begin());
+  while (buffer.size() && std::prev(buffer.end())->pid >= L &&
+         res.holes.size() < cnt) {
+    res.holes.push_back(*std::prev(buffer.end()));
+    buffer.erase(std::prev(buffer.end()));
+  }
   return res;
 }
 
