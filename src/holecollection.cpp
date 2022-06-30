@@ -58,9 +58,9 @@ void HoleCollection::updateAll() {
       int st = i - (int)pid.size() + 1;
       for (int k = 0; k < (int)res.size(); k++) {
         if (res[k]["code"].asInt() == 0) {
-          holes[st+k].reply.resize(res[k]["data"].size());
+          holes[st + k].reply.resize(res[k]["data"].size());
           for (int j = 0; j < (int)res[k]["data"].size(); j++) {
-            holes[st+k].reply[j] = Text(res[k]["data"][j]["text"].asString());
+            holes[st + k].reply[j] = Text(res[k]["data"][j]["text"].asString());
           }
         }
       }

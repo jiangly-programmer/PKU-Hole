@@ -3,9 +3,6 @@
 
 HoleBrowser::HoleBrowser(QWidget* parent) : QWidget(parent) {
   ui.setupUi(this);
-
-  connect(&networkManager, &QNetworkAccessManager::finished, this,
-          &HoleBrowser::loadPicture);
 }
 
 HoleBrowser::~HoleBrowser() {}
@@ -19,12 +16,18 @@ void HoleBrowser::setHole(Hole *hole) {
   ui.root->setText(QString::fromStdString(hole->main.s));
 
   if (!hole->img.url.empty()) {
-    // TODO: 加载图片
-    // ui.root->setText(QString::fromStdString(CONFIG::url + hole.img.url));
+    auto result = API.getimage("https://pkuhelper.pku.edu.cn/services/pkuhole/images/" + hole->img.url);
 
-    // QNetworkRequest request;
-    // request.setUrl(QUrl(QString::fromStdString(hole.img.url)));
-    // networkManager.get(request);
+    auto bytes = QByteArray::fromStdString(result);
+
+    QPixmap pixmap;
+    pixmap.loadFromData(bytes);
+
+    auto* pic = new QLabel(this);
+    pic->setPixmap(pixmap.scaled(1000, 1000, Qt::KeepAspectRatio));
+    pic->setAlignment(Qt::AlignCenter);
+
+    ui.verticalLayout->insertWidget(2, pic);
   }
 
   for (const auto& comment : hole->reply) {
@@ -38,21 +41,4 @@ void HoleBrowser::setHole(Hole *hole) {
   }
 
   this->setWindowTitle("树洞 #" + QString::number(hole->pid));
-}
-
-void HoleBrowser::loadPicture(QNetworkReply* reply) {
-  if (reply->error() == QNetworkReply::NoError) {
-    QByteArray bytes = reply->readAll();
-    QPixmap pixmap;
-    pixmap.loadFromData(bytes);
-
-    auto* pic = new QLabel(this);
-    pic->setText("12345");
-    // ui.label->setPixmap(pixmap);
-
-    ui.verticalLayout->addWidget(pic);
-  } else {
-    std::exit(0);
-  }
-  reply->deleteLater();
 }

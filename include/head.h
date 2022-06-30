@@ -20,7 +20,7 @@ struct TagManager {
   }
   void updateTag(const string& tag) { tags[tag].updateAll(); }
   TagManager() {
-    FILE* F = fopen("../cache/TagManagerCache", "r");
+    FILE* F = fopen("cache/TagManagerCache", "r");
     if (F != NULL) {
       std::string tag;
       while (233) {
@@ -50,11 +50,11 @@ struct TagManager {
         }
         tags[tag] = hc;
       }
+      fclose(F);
     }
-    fclose(F);
   }
   ~TagManager() {
-    FILE* F = fopen("../cache/TagManagerCache", "w");
+    FILE* F = fopen("cache/TagManagerCache", "w");
     for (auto [tag, hc] : tags) {
       fprintf(F, "%s\n", tag.c_str());
       fprintf(F, "%llu\n", hc.holes.size());

@@ -2,7 +2,8 @@
 
 // TODO: 2000000?
 
-HoleCollection HoleSearcherCache::update(int once = true) {
+HoleCollection HoleSearcherCache::update(int once) {
+  //std::freopen("PKU-Hole.log", "w", stderr);
   // std::cerr << "enter HoleSearcherCache::update()" << std::endl;
   int last;
   if (cache.size())
@@ -44,7 +45,7 @@ HoleCollection HoleSearcherCache::update(int once = true) {
         exit(0);
       }
     std::cerr << last << "finished, " << res.holes.size() << " holes\n";
-    FILE* F = fopen("../cache/HoleSearcherCache", "a");
+    FILE* F = fopen("cache/HoleSearcherCache", "a");
     for (auto h : res)
       cache.push_back({h.pid, h.hole_time}),
           fprintf(F, "%d %llu\n", h.pid, h.hole_time);
@@ -53,12 +54,14 @@ HoleCollection HoleSearcherCache::update(int once = true) {
       std::cerr << "WARNING: res.holes.size() < 10\n";
       Sleep(30000);
     }
-    if (once) break;
+    if (once)
+      break;
   }
   return now_;
 }
 HoleSearcherCache::HoleSearcherCache() {
-  FILE* F = fopen("../cache/HoleSearcherCache", "r");
+  FILE* F = fopen("cache/HoleSearcherCache", "r");
+  assert(F != nullptr);
   if (F != NULL) {
     int x;
     time_t y;
@@ -66,8 +69,8 @@ HoleSearcherCache::HoleSearcherCache() {
       cache.push_back({x, y});
     fclose(F);
   }
-  update(false);
 }
+
 HoleSearcherCache HSC;
 
 HoleSearcher::HoleSearcher(const Filter& _filter,

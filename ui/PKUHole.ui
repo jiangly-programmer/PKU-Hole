@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>540</width>
-    <height>442</height>
+    <width>583</width>
+    <height>421</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -107,8 +107,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>520</width>
-         <height>347</height>
+         <width>563</width>
+         <height>326</height>
         </rect>
        </property>
        <property name="sizePolicy">
@@ -117,7 +117,33 @@
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
-       <layout class="QVBoxLayout" name="holeListLayout"/>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="baseSize">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
+       </property>
+       <layout class="QVBoxLayout" name="holeListLayout">
+        <item>
+         <widget class="QPushButton" name="loadMoreButton">
+          <property name="font">
+           <font>
+            <family>Microsoft YaHei UI</family>
+            <pointsize>12</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>加载更多</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </widget>
      </widget>
     </item>
@@ -136,8 +162,8 @@
    <slot>jump()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>469</x>
-     <y>43</y>
+     <x>553</x>
+     <y>57</y>
     </hint>
     <hint type="destinationlabel">
      <x>424</x>
@@ -145,8 +171,25 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>loadMoreButton</sender>
+   <signal>clicked()</signal>
+   <receiver>PKUHoleClass</receiver>
+   <slot>loadMore()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>335</x>
+     <y>253</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>404</x>
+     <y>16</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>jump()</slot>
+  <slot>loadMore()</slot>
  </slots>
 </ui>

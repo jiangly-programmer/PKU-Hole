@@ -15,6 +15,8 @@ int main(int argc, char* argv[]) {
 
   CONFIG::url = config["url"].asString() + "api.php";
   CONFIG::token = config["token"].asString();
+
+  HSC.update(false);
   //test_hole_searcher();
   QApplication app(argc, argv);
 

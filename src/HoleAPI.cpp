@@ -252,7 +252,7 @@ vector<JSON> HoleAPI::multi_getcomment(const vector<int>& pid) const {
   return RES;
 }
 
-string getimage(const std::string& url) const {
+string HoleAPI::getimage(const std::string& url) const {
   string tmp;
   auto curl = my_easy_init(url, tmp);
   CURLcode res = curl_easy_perform(curl);
@@ -261,6 +261,8 @@ string getimage(const std::string& url) const {
     fprintf(stderr, "%s failed: %s\n", url.c_str(), curl_easy_strerror(res));
     return "";
   }
+  //log.write(tmp.c_str(), tmp.length());
+
   return tmp;
 }
 

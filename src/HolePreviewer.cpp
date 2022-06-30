@@ -26,6 +26,24 @@ void HolePreviewer::setHole(Hole *hole) {
     ui.commentPreviewer->addWidget(comment);
   }
 
+  if (!hole->img.url.empty()) {
+    auto result =
+        API.getimage("https://pkuhelper.pku.edu.cn/services/pkuhole/images/" +
+                     hole->img.url);
+
+    auto bytes = QByteArray::fromStdString(result);
+
+    QPixmap pixmap;
+    pixmap.loadFromData(bytes);
+
+    auto* pic = new QLabel(this);
+
+    pic->setPixmap(pixmap.scaled(1000, 1000, Qt::KeepAspectRatio));
+    pic->setAlignment(Qt::AlignCenter);
+
+    ui.verticalLayout->insertWidget(2, pic);
+  }
+
   if (hole->replynum > 3) {
     auto* more = new QPushButton(this);
     more->setText("共 " + QString::number(hole->replynum) + " 条回复");
