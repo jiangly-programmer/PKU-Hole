@@ -13,6 +13,7 @@ struct HoleAPI {
   JSON getlist(int p) const;
   JSON getattention() const;
   JSON search(string word, int page) const;
+  string getimage(const std::string& url) const;
 };
 extern HoleAPI API;
 
