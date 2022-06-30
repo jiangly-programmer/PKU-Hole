@@ -3,7 +3,6 @@
 // TODO: 2000000?
 
 HoleCollection HoleSearcherCache::update(int once) {
-  //std::freopen("PKU-Hole.log", "w", stderr);
   // std::cerr << "enter HoleSearcherCache::update()" << std::endl;
   int last;
   if (cache.size())
@@ -54,14 +53,12 @@ HoleCollection HoleSearcherCache::update(int once) {
       std::cerr << "WARNING: res.holes.size() < 10\n";
       Sleep(30000);
     }
-    if (once)
-      break;
+    if (once) break;
   }
   return now_;
 }
 HoleSearcherCache::HoleSearcherCache() {
   FILE* F = fopen("cache/HoleSearcherCache", "r");
-  assert(F != nullptr);
   if (F != NULL) {
     int x;
     time_t y;
@@ -70,7 +67,6 @@ HoleSearcherCache::HoleSearcherCache() {
     fclose(F);
   }
 }
-
 HoleSearcherCache HSC;
 
 HoleSearcher::HoleSearcher(const Filter& _filter,
@@ -78,6 +74,7 @@ HoleSearcher::HoleSearcher(const Filter& _filter,
                            bool enforce)
     : filter(_filter), TFilter(tfilter), enforce_all(enforce) {
   // std::cerr << "enter HoleSearcher\n";
+  L = 1e9;
   if (enforce_all || !filter.allPositiveWords().size()) {
     HoleCollection now_ = HSC.update();
     for (auto h : now_)
@@ -121,19 +118,19 @@ HoleSearcher::HoleSearcher(const Filter& _filter,
   // std::cerr << "exit HoleSearcher\n";
 }
 
-const HoleCollection HoleSearcher::getNext() {
+const HoleCollection HoleSearcher::getNext(unsigned cnt) {
   printf("enter HoleSearcher::getNext\n");
   auto words = filter.allPositiveWords();
   printf("positive words get\n");
   if (enforce_all || !words.size()) {
     HoleCollection res;
-    while (R > 2000000 + 20 && res.holes.size() < 50u) {
+    while (R > 2000000 + 20 && res.holes.size() < cnt) {
       vector<int> V;
       for (int i = R; i > R - 20; i--)
         V.push_back(i);
       R -= 20;
       HoleCollection tmp(V);
-      tmp.updateAll();
+      // tmp.updateAll();
       for (auto h : tmp)
         if (filter(h) && TFilter(h))
           res.holes.push_back(h);
@@ -142,28 +139,29 @@ const HoleCollection HoleSearcher::getNext() {
     }
     return res;
   }
-  HoleCollection res;
-  set<int> s;
-  std::cerr << "R: " << R << std::endl;
-  if (R > 3)
-    return res;
-  for (auto word : words) {
-    std::cerr << "try word " << word << ", page " << R << '\n';
-    HoleCollection hc = HoleCollection::from_search_result(API.search(word, R));
-    hc.updateAll();
-    for (auto h : hc)
-      fprintf(stderr, "%d ", h.pid);
-    fprintf(stderr, "\n");
-    for (auto h : hc)
-      if (!s.count(h.pid)) {
-        s.insert(h.pid);
-        if (filter(h) && TFilter(h))
-          res.holes.push_back(h);
-      }
-    Sleep(200);
+  if ([&](){int c=0;for (auto h:buffer) if (h.pid>=L) ++c;return c<cnt;}() && R <= 3) {
+    // buffer 不够用，并且还有东西没搜
+    L = 0;
+    set<int> s;
+    for (auto h : buffer) s.insert(h.pid);
+    for (auto word : words) {
+      std::cerr << "try word " << word << ", page " << R << '\n';
+      HoleCollection hc = HoleCollection::from_search_result(API.search(word, R));
+      int last = 1e9;
+      // hc.updateAll();
+      for (auto h : hc)
+        if (!s.count(h.pid)) {
+          s.insert(h.pid);
+          if (filter(h) && TFilter(h))
+            buffer.insert(h), last = h.pid;
+        }
+      L = std::max(L, last);
+      Sleep(200);
+    }
+    R++;
   }
-  R++;
-  res.sort_by_pid();
+  HoleCollection res;
+  while (buffer.size() && buffer.begin() -> pid >= L && res.holes.size() < cnt) res.holes.push_back(*(buffer.begin())),buffer.erase(buffer.begin());
   return res;
 }
 

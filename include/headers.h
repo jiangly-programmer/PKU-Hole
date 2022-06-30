@@ -12,6 +12,7 @@
 #include <unordered_set>
 #include <vector>
 #include <algorithm>
+#include <set>
 
 using std::map;
 using std::string;
@@ -20,3 +21,5 @@ using std::vector;
 
 template <class T>
 using set = std::unordered_set<T>;
+template <class T>
+using ordered_set = std::set<T>;

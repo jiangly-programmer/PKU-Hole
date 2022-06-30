@@ -160,7 +160,7 @@ struct Hole {
         main(r.get_main(x)),
         reply(r.get_reply(x)),
         img(r.get_img(x)) {}
-  bool operator<(Hole& a) const { return pid < a.pid; }
+  bool operator<(const Hole& a) const { return pid < a.pid; }
   virtual JSON to_JSON() const {
     // 他妈的老子先不测了
     JSON ret;
