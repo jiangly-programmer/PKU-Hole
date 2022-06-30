@@ -1,7 +1,8 @@
 #include "PKUHole.h"
+#include <QScrollBar>
 #include "HolePreviewer.h"
 #include "HoleSearcher.h"
-#include <QScrollBar>
+#include "AdvancedSearch.h"
 
 PKUHole::PKUHole(QWidget* parent)
     : QMainWindow(parent), pid(-1), searcher(nullptr), batchCount(0) {
@@ -15,7 +16,7 @@ PKUHole::PKUHole(QWidget* parent)
 
 void PKUHole::onSearchButtonClicked() {
   auto text = this->ui.IDEdit->text();
-  
+
   pid = -1;
 
   bool ok = false;
@@ -39,18 +40,17 @@ void PKUHole::onSearchButtonClicked() {
 
   while (ui.holeListLayout->count() > 1) {
     auto* hole = ui.holeListLayout->takeAt(0)->widget();
-    hole->setVisible(false);
-    ui.holeListLayout->removeWidget(hole);
     hole->deleteLater();
   }
-  ui.loadMoreButton->setText("加载更多");
-  ui.loadMoreButton->setEnabled(true);
-  ui.holeList->verticalScrollBar()->setValue(0);
 
   loadMore();
 }
 
 void PKUHole::loadMore() {
+  ui.loadMoreButton->setText("加载更多");
+  ui.loadMoreButton->setEnabled(true);
+  ui.holeList->verticalScrollBar()->setValue(0);
+
   HoleCollection holeCollection;
   if (searcher == nullptr) {
     holeCollection =
@@ -80,6 +80,29 @@ void PKUHole::loadMore() {
                                       holePreviewer);
     }
   }
+}
+
+void PKUHole::startAdvancedSearchWindow() {
+  auto* advancedSearch = new AdvancedSearch();
+
+  advancedSearch->show();
+
+  connect(advancedSearch, &AdvancedSearch::advancedSearchConfirmed, this, &PKUHole::applyAdvancedSearch);
+}
+
+void PKUHole::applyAdvancedSearch(Filter *filter) {
+  if (searcher != nullptr) {
+    delete searcher;
+  }
+  searcher = new HoleSearcher(*filter, T_ALLOK, false);
+  batchCount = 0;
+
+  while (ui.holeListLayout->count() > 1) {
+    auto* hole = ui.holeListLayout->takeAt(0)->widget();
+    hole->deleteLater();
+  }
+
+  loadMore();
 }
 
 PKUHole::~PKUHole() {

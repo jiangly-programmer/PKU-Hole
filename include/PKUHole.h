@@ -21,4 +21,6 @@ class PKUHole : public QMainWindow {
  public slots:
   void onSearchButtonClicked();
   void loadMore();
+  void startAdvancedSearchWindow();
+  void applyAdvancedSearch(Filter *filter);
 };

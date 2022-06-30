@@ -108,6 +108,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\AdvancedFilter.cpp" />
+    <ClCompile Include="src\AdvancedSearch.cpp" />
     <ClCompile Include="src\HoleBrowser.cpp" />
     <ClCompile Include="src\HolePreviewer.cpp" />
     <ClCompile Include="src\config.cpp" />
@@ -118,6 +120,8 @@
     <ClCompile Include="src\HoleSearcher.cpp" />
     <ClCompile Include="src\PKUHole.cpp" />
     <QtRcc Include="ui\PKUHole.qrc" />
+    <QtUic Include="ui\AdvancedFilter.ui" />
+    <QtUic Include="ui\AdvancedSearch.ui" />
     <QtUic Include="ui\HolePreviewer.ui" />
     <QtUic Include="ui\HoleBrowser.ui" />
     <QtUic Include="ui\PKUHole.ui" />
@@ -129,6 +133,8 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="include\HolePreviewer.h" />
+    <QtMoc Include="include\AdvancedSearch.h" />
+    <QtMoc Include="include\AdvancedFilter.h" />
     <ClInclude Include="include\utility.h" />
     <ClInclude Include="include\config.h" />
     <ClInclude Include="include\Filter.h" />

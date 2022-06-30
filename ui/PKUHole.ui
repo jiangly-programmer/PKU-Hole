@@ -91,6 +91,19 @@
         </property>
        </widget>
       </item>
+      <item>
+       <widget class="QPushButton" name="advancedSearchButton">
+        <property name="font">
+         <font>
+          <family>Microsoft YaHei UI</family>
+          <pointsize>12</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>高级</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </item>
     <item>
@@ -170,7 +183,7 @@
    <slot>onSearchButtonClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>553</x>
+     <x>468</x>
      <y>57</y>
     </hint>
     <hint type="destinationlabel">
@@ -195,9 +208,26 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>advancedSearchButton</sender>
+   <signal>clicked()</signal>
+   <receiver>PKUHoleClass</receiver>
+   <slot>startAdvancedSearchWindow()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>520</x>
+     <y>48</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>516</x>
+     <y>8</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>loadMore()</slot>
   <slot>onSearchButtonClicked()</slot>
+  <slot>startAdvancedSearchWindow()</slot>
  </slots>
 </ui>

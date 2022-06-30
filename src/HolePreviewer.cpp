@@ -58,7 +58,7 @@ void HolePreviewer::setHole(Hole *hole) {
 
 void HolePreviewer::browseFull() {
   auto holeBrowser = new HoleBrowser();
-  holeBrowser->setHole(this->hole);
+  holeBrowser->setHole(hole);
   holeBrowser->resize(1920, 1080);
 
   holeBrowser->show();
