@@ -11,7 +11,7 @@
 修改 config.json 中的 "token" 项为你的 token（在树洞网页版中点击账户 -> 复制 User Token），然后运行 PKU-Hole.exe 即可。
 
 ### 未来可能会实现的功能
-
+<del>应该不会实现了</del>
 ##### 过滤
 
 - 用户自定义屏蔽词
