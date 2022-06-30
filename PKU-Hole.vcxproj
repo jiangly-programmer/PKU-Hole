@@ -78,7 +78,7 @@
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(Qt_INCLUDEPATH_);C:\Users\19022\source\repos\PKU-Hole\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>%(AdditionalDependencies);$(Qt_LIBS_);C:\Users\19022\source\repos\PKU-Hole\lib\libjson.lib;C:\Users\19022\source\repos\PKU-Hole\lib\libcurl.dll.a</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies);$(Qt_LIBS_);C:\Users\19022\source\repos\PKU-Hole\lib\libcurl.dll.a;C:\Users\19022\source\repos\PKU-Hole\lib\libjson.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
