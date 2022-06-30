@@ -10,7 +10,9 @@ struct HoleSearcher {
   TimeFilter TFilter;
   bool enforce_all;
   int R;  // 如果必须抓取所有树洞，那么在一开始就把编号起始位置二分出来
-  explicit HoleSearcher(const Filter&, const TimeFilter&, bool);
+  explicit HoleSearcher(const Filter& _filter,
+                        const TimeFilter& tfilter,
+                        bool enforce);
   const HoleCollection getNext();
 };
 

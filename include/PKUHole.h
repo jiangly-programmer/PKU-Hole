@@ -2,6 +2,7 @@
 
 #include "HoleBrowser.h"
 #include "HoleCollection.h"
+#include "HoleSearcher.h"
 #include "ui_PKUHole.h"
 
 class PKUHole : public QMainWindow {
@@ -12,9 +13,11 @@ class PKUHole : public QMainWindow {
   ~PKUHole();
 
  private:
+  HoleSearcher* searcher;
+  int batchCount;
   Ui::PKUHoleClass ui;
 
  public slots:
-  void jump();
+  void onSearchButtonClicked();
   void loadMore();
 };

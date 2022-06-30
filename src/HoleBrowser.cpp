@@ -37,6 +37,7 @@ void HoleBrowser::setHole(Hole *hole) {
     lbl->setStyleSheet("QLabel{background:#FFFFFF;}");
     lbl->setWordWrap(true);
     lbl->setMargin(5);
+    lbl->setTextInteractionFlags(Qt::TextBrowserInteraction);
     ui.commentContentsLayout->addWidget(lbl);
   }
 

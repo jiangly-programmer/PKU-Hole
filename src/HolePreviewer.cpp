@@ -23,6 +23,7 @@ void HolePreviewer::setHole(Hole *hole) {
     comment->setStyleSheet("QLabel{background:#FFFFFF;}");
     comment->setWordWrap(true);
     comment->setMargin(5);
+    comment->setTextInteractionFlags(Qt::TextBrowserInteraction);
     ui.commentPreviewer->addWidget(comment);
   }
 
@@ -49,7 +50,6 @@ void HolePreviewer::setHole(Hole *hole) {
     more->setText("共 " + QString::number(hole->replynum) + " 条回复");
     more->setFont(QFont("Microsoft YaHei", 12));
     more->setStyleSheet("QLabel{background:#FFFFFF;}");
-    more->setCursor(Qt::PointingHandCursor);
     ui.commentPreviewer->addWidget(more);
 
     connect(more, &QPushButton::clicked, this, &HolePreviewer::browseFull);

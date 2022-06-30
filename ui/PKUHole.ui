@@ -19,6 +19,14 @@
     <verstretch>0</verstretch>
    </sizepolicy>
   </property>
+  <property name="font">
+   <font>
+    <family>Arial</family>
+   </font>
+  </property>
+  <property name="cursor">
+   <cursorShape>ArrowCursor</cursorShape>
+  </property>
   <property name="windowTitle">
    <string>P大树洞</string>
   </property>
@@ -74,7 +82,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="jumpButton">
+       <widget class="QPushButton" name="searchButton">
         <property name="font">
          <font>
           <family>Microsoft YaHei UI</family>
@@ -138,6 +146,9 @@
             <pointsize>12</pointsize>
            </font>
           </property>
+          <property name="cursor">
+           <cursorShape>ArrowCursor</cursorShape>
+          </property>
           <property name="text">
            <string>加载更多</string>
           </property>
@@ -156,10 +167,10 @@
  </resources>
  <connections>
   <connection>
-   <sender>jumpButton</sender>
+   <sender>searchButton</sender>
    <signal>clicked()</signal>
    <receiver>PKUHoleClass</receiver>
-   <slot>jump()</slot>
+   <slot>onSearchButtonClicked()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>553</x>
@@ -189,7 +200,7 @@
   </connection>
  </connections>
  <slots>
-  <slot>jump()</slot>
   <slot>loadMore()</slot>
+  <slot>onSearchButtonClicked()</slot>
  </slots>
 </ui>

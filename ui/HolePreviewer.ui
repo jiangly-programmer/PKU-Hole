@@ -123,6 +123,9 @@
      <property name="margin">
       <number>5</number>
      </property>
+     <property name="textInteractionFlags">
+      <set>Qt::TextBrowserInteraction</set>
+     </property>
     </widget>
    </item>
    <item>
