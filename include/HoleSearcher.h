@@ -17,7 +17,7 @@ struct HoleSearcher {
 struct HoleSearcherCache {
   vector<std::pair<int, time_t>> cache;  // 大约每一千条存几个位置
   time_t update_time;
-  HoleCollection update();
+  HoleCollection update(int once = true);
   HoleSearcherCache();
 };
 

@@ -23,9 +23,7 @@ void PKUHole::jump() {
 }
 
 void PKUHole::refresh() {
-  HoleSearcher holeSearcher(ALLOK, T_ALLOK, false);
-
-  auto holeCollection = holeSearcher.getNext();
+  auto holeCollection = HoleCollection::from_getlist_result(API.getlist(1));
   holeCollection.updateAll();
 
   for (auto hole : holeCollection.holes) {
