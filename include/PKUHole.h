@@ -13,6 +13,7 @@ class PKUHole : public QMainWindow {
   ~PKUHole();
 
  private:
+  int pid;
   HoleSearcher* searcher;
   int batchCount;
   Ui::PKUHoleClass ui;

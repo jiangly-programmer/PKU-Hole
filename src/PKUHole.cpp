@@ -1,10 +1,10 @@
 #include "PKUHole.h"
 #include "HolePreviewer.h"
 #include "HoleSearcher.h"
+#include <QScrollBar>
 
-PKUHole::PKUHole(QWidget* parent) : QMainWindow(parent) {
-  searcher = nullptr;
-  batchCount = 0;
+PKUHole::PKUHole(QWidget* parent)
+    : QMainWindow(parent), pid(-1), searcher(nullptr), batchCount(0) {
   ui.setupUi(this);
 
   ui.holeListContents->setMinimumWidth(
@@ -15,6 +15,16 @@ PKUHole::PKUHole(QWidget* parent) : QMainWindow(parent) {
 
 void PKUHole::onSearchButtonClicked() {
   auto text = this->ui.IDEdit->text();
+  
+  pid = -1;
+
+  bool ok = false;
+  if (text[0] == '#' && text.mid(1).toInt(&ok) && ok) {
+    pid = text.mid(1).toInt();
+  }
+  if (text.toInt(&ok) && ok) {
+    pid = text.toInt();
+  }
 
   if (searcher != nullptr) {
     delete searcher;
@@ -22,7 +32,8 @@ void PKUHole::onSearchButtonClicked() {
   if (text.isEmpty()) {
     searcher = nullptr;
   } else {
-     searcher = new HoleSearcher(KeywordFilter(text.toStdString(), 1), T_ALLOK, false);
+    searcher =
+        new HoleSearcher(KeywordFilter(text.toStdString(), 1), T_ALLOK, false);
   }
   batchCount = 0;
 
@@ -34,6 +45,7 @@ void PKUHole::onSearchButtonClicked() {
   }
   ui.loadMoreButton->setText("加载更多");
   ui.loadMoreButton->setEnabled(true);
+  ui.holeList->verticalScrollBar()->setValue(0);
 
   loadMore();
 }
@@ -45,8 +57,17 @@ void PKUHole::loadMore() {
         HoleCollection::from_getlist_result(API.getlist(++batchCount));
   } else {
     holeCollection = searcher->getNext();
+    batchCount++;
   }
   holeCollection.updateAll();
+
+  if (pid != -1 && batchCount == 1) {
+    HoleCollection single({pid});
+    single.updateAll();
+    for (auto hole : single.holes) {
+      holeCollection.holes.insert(holeCollection.begin(), hole);
+    }
+  }
 
   if (holeCollection.holes.empty()) {
     ui.loadMoreButton->setText("没有更多了");
